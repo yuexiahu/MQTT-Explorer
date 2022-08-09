@@ -15,9 +15,9 @@ build_script:
   - yarn prepare-release
   - yarn package appx
 
-test_script:
-  - yarn lint
-  - yarn test
+# test_script:
+#   - yarn lint
+#   - yarn test
 
 artifacts:
   - path: 'build\clean\build\*.appx'
