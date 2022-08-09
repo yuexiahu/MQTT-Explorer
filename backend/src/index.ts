@@ -43,9 +43,9 @@ export class ConnectionManager {
     const messageEvent = makeConnectionMessageEvent(connectionId)
     connection.onMessage((topic: string, payload: Buffer, packet: any) => {
       let buffer = payload
-      const length_limit = 100000;
-      if (buffer.length > length_limit) {
-        buffer = buffer.slice(0, length_limit)
+      const lengthLimit = 100000;
+      if (buffer.length > lengthLimit) {
+        buffer = buffer.slice(0, lengthLimit)
       }
 
       backendEvents.emit(messageEvent, {
