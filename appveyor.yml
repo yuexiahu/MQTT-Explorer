@@ -13,11 +13,11 @@ build_script:
   - yarn
   - yarn build
   - yarn prepare-release
-  - yarn package appx
+  - yarn package win
 
 # test_script:
 #   - yarn lint
 #   - yarn test
 
 artifacts:
-  - path: 'build\clean\build\*.appx'
+  - path: 'build\clean\build\*.exe'
