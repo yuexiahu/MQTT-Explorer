@@ -3,7 +3,7 @@ import * as protobuf from 'protobufjs'
 import { Base64Message } from './Base64Message';
 import { Decoder } from './Decoder';
 
-const buffer = readFileSync(require.resolve('../../../../res/sparkplug_b.proto'));
+const buffer = readFileSync(require.resolve('../../../../static/sparkplug_b.proto'));
 const root = protobuf.parse(buffer.toString()).root
 export let SparkplugPayload = root.lookupType('com.cirruslink.sparkplug.protobuf.Payload')
 
