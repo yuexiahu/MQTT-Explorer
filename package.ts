@@ -27,7 +27,7 @@ const winPortable: builder.CliOptions = {
   armv7l: false,
   arm64: false,
   projectDir: './build/clean',
-  publish: 'always',
+  publish: 'never',
 }
 
 const winNsis: builder.CliOptions = {
@@ -36,7 +36,7 @@ const winNsis: builder.CliOptions = {
   armv7l: false,
   arm64: false,
   projectDir: './build/clean',
-  publish: 'always',
+  publish: 'never',
 }
 
 const winAppx: builder.CliOptions = {
