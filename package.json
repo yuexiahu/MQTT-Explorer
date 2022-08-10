@@ -65,6 +65,12 @@
       "buildResources": "res",
       "output": "build"
     },
+    "extraResources": [
+      {
+        "from": "res/sparkplug_b.proto",
+        "to": "res/sparkplug_b.proto"
+      }
+    ],
     "afterPack": "./dist/scripts/afterPack.js"
   },
   "author": "Thomas Nordquist",
