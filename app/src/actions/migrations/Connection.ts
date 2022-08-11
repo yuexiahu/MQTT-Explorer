@@ -13,6 +13,7 @@ export interface ConnectionOptionsV0 {
   username?: string
   password?: string
   encryption: boolean
+  zlibCompression: boolean
   certValidation: boolean
   // selfSignedCertificate?: CertificateParameters
   // clientCertificate?: CertificateParameters

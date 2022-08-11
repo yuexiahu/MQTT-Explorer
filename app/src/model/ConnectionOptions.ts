@@ -21,6 +21,7 @@ export interface ConnectionOptions {
   username?: string
   password?: string
   encryption: boolean
+  zlibCompression: boolean
   certValidation: boolean
   selfSignedCertificate?: CertificateParameters
   clientCertificate?: CertificateParameters
@@ -39,6 +40,7 @@ export function toMqttConnection(options: ConnectionOptions): MqttOptions | unde
     username: options.username,
     password: options.password,
     tls: options.encryption,
+    zlibCompression: options.zlibCompression,
     clientId: options.clientId,
     certValidation: options.certValidation,
     subscriptions: options.subscriptions,
@@ -61,6 +63,7 @@ export function createEmptyConnection(): ConnectionOptions {
     id: v4() as string,
     name: 'new connection',
     encryption: false,
+    zlibCompression: false,
     password: undefined,
     username: undefined,
     subscriptions: [

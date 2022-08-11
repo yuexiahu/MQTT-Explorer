@@ -140,6 +140,12 @@ function ConnectionSettings(props: Props) {
     })
   }
 
+  const toggleZlibCompression = () => {
+    props.managerActions.updateConnection(props.connection.id, {
+      zlibCompression: !props.connection.zlibCompression,
+    })
+  }
+
   function PasswordVisibilityButton(props: { showPassword: boolean; toggle: () => void }) {
     return (
       <InputAdornment position="end">
@@ -166,7 +172,7 @@ function ConnectionSettings(props: Props) {
               margin="normal"
             />
           </Grid>
-          <Grid item={true} xs={4}>
+          <Grid item={true} xs={2}>
             <ToggleSwitch
               label="Validate certificate"
               classes={classes}
@@ -174,8 +180,11 @@ function ConnectionSettings(props: Props) {
               toggle={toggleCertValidation}
             />
           </Grid>
-          <Grid item={true} xs={3}>
+          <Grid item={true} xs={2}>
             <ToggleSwitch label="Encryption (tls)" classes={classes} value={connection.encryption} toggle={toggleTls} />
+          </Grid>
+          <Grid item={true} xs={2}>
+            <ToggleSwitch label="Compression (zlib)" classes={classes} value={connection.zlibCompression} toggle={toggleZlibCompression} />
           </Grid>
           <Grid item={true} xs={2}>
             {renderProtocols()}

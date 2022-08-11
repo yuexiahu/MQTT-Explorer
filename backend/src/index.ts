@@ -11,9 +11,12 @@ import {
   removeConnection,
 } from '../../events'
 import { SparkplugDecoder } from './Model/sparkplugb'
+import { ZlibDecoder, ZlibEncoder } from './Model/zlibCodec'
 
 export class ConnectionManager {
   private connections: { [s: string]: DataSource<any> } = {}
+
+  private zlibCompression: boolean = false
 
   private handleConnectionRequest = (event: AddMqttConnection) => {
     const connectionId = event.id
@@ -26,6 +29,7 @@ export class ConnectionManager {
     const options = event.options
     const connection = new MqttSource()
     this.connections[connectionId] = connection
+    this.zlibCompression = options.zlibCompression
 
     const connectionStateEvent = makeConnectionStateEvent(connectionId)
     connection.stateMachine.onUpdate.subscribe(state => {
@@ -35,6 +39,9 @@ export class ConnectionManager {
     connection.connect(options)
     this.handleNewMessagesForConnection(connectionId, connection)
     backendEvents.subscribe(makePublishEvent(connectionId), (msg: MqttMessage) => {
+      if (this.zlibCompression && msg.payload) {
+        msg.rawPayload = ZlibEncoder.encode(msg.payload)
+      }
       this.connections[connectionId].publish(msg)
     })
   }
@@ -50,7 +57,7 @@ export class ConnectionManager {
 
       backendEvents.emit(messageEvent, {
         topic,
-        payload: SparkplugDecoder.decode(buffer) ?? Base64Message.fromBuffer(buffer),
+        payload: this.zlibCompression && ZlibDecoder.decode(buffer) || Base64Message.fromBuffer(buffer),
         qos: packet.qos,
         retain: packet.retain,
         messageId: packet.messageId,

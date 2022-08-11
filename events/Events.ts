@@ -33,6 +33,7 @@ export const updateAvailable: Event<UpdateInfo> = {
 export interface MqttMessage {
   topic: string
   payload: Base64Message | null
+  rawPayload?: Buffer
   qos: 0 | 1 | 2
   retain: boolean
   // Set if QoS is > 0 on received messages

@@ -10,6 +10,7 @@ export interface MqttOptions {
   username?: string
   password?: string
   tls: boolean
+  zlibCompression: boolean
   certValidation: boolean
   clientId?: string
   subscriptions: Array<Subscription>
@@ -99,10 +100,19 @@ export class MqttSource implements DataSource<MqttOptions> {
 
   public publish(msg: MqttMessage) {
     if (this.client) {
-      this.client.publish(msg.topic, msg.payload ? Base64Message.toUnicodeString(msg.payload) : '', {
-        qos: msg.qos,
-        retain: msg.retain,
-      })
+      if (msg.rawPayload) {
+        console.log(msg.rawPayload.toString('hex'))
+        this.client.publish(msg.topic, msg.rawPayload, {
+          qos: msg.qos,
+          retain: msg.retain,
+        })
+      }
+      else {
+        this.client.publish(msg.topic, msg.payload ? Base64Message.toUnicodeString(msg.payload) : '', {
+          qos: msg.qos,
+          retain: msg.retain,
+        })
+      }
     }
   }
 
