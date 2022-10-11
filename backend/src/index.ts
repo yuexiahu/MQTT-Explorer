@@ -50,7 +50,7 @@ export class ConnectionManager {
     const messageEvent = makeConnectionMessageEvent(connectionId)
     connection.onMessage((topic: string, payload: Buffer, packet: any) => {
       let buffer = payload
-      const lengthLimit = 100000;
+      const lengthLimit = 1024*1000;
       if (buffer.length > lengthLimit) {
         buffer = buffer.slice(0, lengthLimit)
       }
